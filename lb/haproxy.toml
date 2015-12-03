@@ -1,0 +1,8 @@
+# /etc/confd/conf.d/haproxy.toml
+[template]
+src = "haproxy.cfg.tmpl"
+dest = "/etc/haproxy/haproxy.cfg"
+keys = [
+        "/apps/simple-task"
+]
+reload_cmd = "echo restarting && /usr/sbin/service haproxy reload"

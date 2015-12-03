@@ -1,0 +1,10 @@
+# /etc/confd/confd.toml
+confdir = "/etc/confd"
+interval = 20
+backend = "etcd"
+nodes = [
+        "http://ETCDNODE:4001"
+]
+prefix = "/"
+scheme = "http"
+verbose = true

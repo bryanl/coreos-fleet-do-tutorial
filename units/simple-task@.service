@@ -1,0 +1,13 @@
+[Unit]
+Description=simple-task
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStart=/usr/bin/docker run -p 8080:8080 -e PORT=8080 --rm --name simple-task-%i bryanl/simple-task:2015120201 /go/bin/simple-task
+ExecStartPost=/bin/bash -c 'etcdctl set /apps/simple-task/%i "%p $(curl http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address):8080"'
+ExecStop=/usr/bin/docker kill simple-task-%i
+ExecStopPost=/bin/bash -c 'etcdctl rm /apps/simple-task/%i'
+
+[X-Fleet]
+Conflicts=simple-task@*.service
